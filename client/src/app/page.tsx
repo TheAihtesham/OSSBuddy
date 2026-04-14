@@ -5,7 +5,7 @@ import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { Search, Code2, Cpu, Globe, Zap, Star, ShieldCheck, Sparkles } from "lucide-react";
 import { useRef } from "react";
 
-// Floating element data
+
 const floatingItems = [
   { icon: <Zap className="w-5 h-5 text-yellow-500" />, text: "Real-time updates", top: "20%", left: "5%", speed: 0.2 },
   { icon: <Star className="w-5 h-5 text-blue-500" />, text: "Top-tier repos", top: "15%", right: "8%", speed: 0.5 },
@@ -16,10 +16,9 @@ const floatingItems = [
 export default function Home() {
   const containerRef = useRef(null);
 
-  // Track vertical scroll
+ 
   const { scrollY } = useScroll();
 
-  // Logic to hide elements: Opacity goes to 0 as user scrolls 300px down
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
@@ -34,7 +33,7 @@ export default function Home() {
     restDelta: 0.001
   });
 
-  // ... (steps and features arrays remain the same as your code)
+
   const steps = [
     { title: "Connect your GitHub", description: "Sync your profile to get personalized repository recommendations based on your tech stack.", icon: "01" },
     { title: "AI Analysis", description: "Pick a project. Our AI scans the codebase to explain the folder structure and logic in plain English.", icon: "02" },
@@ -76,16 +75,16 @@ export default function Home() {
                   top: item.top,
                   left: item.left,
                   right: item.right,
-                  y: yMove, // Parallax effect
-                  opacity,   // Fades out on scroll
-                  scale      // Shrinks on scroll
+                  y: yMove, 
+                  opacity,   
+                  scale      
                 }}
                 className="absolute flex items-center gap-3 px-4 py-2 bg-white rounded-full shadow-lg border border-gray-100 z-0"
                 animate={{
-                  y: [0, -10, 0], // Gentle hover animation
+                  y: [0, -10, 0], 
                 }}
                 transition={{
-                  duration: 3 + idx, // Different timing for each
+                  duration: 3 + idx, 
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
@@ -119,8 +118,7 @@ export default function Home() {
         </motion.div>
       </main>
 
-      {/* 3. Features Section */}
-      {/* 3. Professional Bento Grid & Tech Stack */}
+    
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-8">
 
