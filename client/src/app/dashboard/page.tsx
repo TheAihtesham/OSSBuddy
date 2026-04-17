@@ -231,6 +231,37 @@ const Dashboard = () => {
                   </li>
                 ))}
               </ul>
+
+              <div>
+                <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-4 px-2">
+                  Productivity
+                </h3>
+
+                <ul className="space-y-1">
+                  {[
+                    { id: "leaderboard", label: "Leaderboard", icon: <Globe className="w-4 h-4" /> },
+                    { id: "match-me", label: "Match Me", icon: <Star className="w-4 h-4" /> },
+                    { id: "plans", label: "My Plans", icon: <Bookmark className="w-4 h-4" /> },
+                  ].map((item) => (
+                    <li
+                      key={item.id}
+                      onClick={() => {
+                        setShowBookmarks(false);
+                        setShowAskAI(false);
+                        setIsSearchMode(false);
+
+                        if (item.id === "leaderboard") router.push("/leaderboard");
+                        if (item.id === "match-me") router.push("/match");
+                        if (item.id === "plans") router.push("/plans");
+                      }}
+                      className="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer text-gray-500 hover:bg-gray-50 dark:hover:bg-[#161b22]"
+                    >
+                      {item.icon}
+                      {item.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div>
@@ -249,7 +280,11 @@ const Dashboard = () => {
             {user ? (
               <>
                 <div className="flex items-center gap-2 overflow-hidden"
-                  onClick={() => router.push("/profile")}
+                  onClick={() => {
+                    if (user?.username) {
+                      router.push(`/profile/${user.username}`);
+                    }
+                  }}
                 >
                   <img
                     src={user.photoURL}
