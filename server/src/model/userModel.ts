@@ -1,8 +1,5 @@
 import { Schema, Document, model, models } from "mongoose";
 
-/**
- * Leaderboard score breakdown
- */
 interface ScoreBreakdown {
   prScore: number;
   issueScore: number;
@@ -11,9 +8,6 @@ interface ScoreBreakdown {
   multiplier: number;
 }
 
-/**
- * Main User Interface
- */
 export interface IUSER extends Document {
   email: string;
   githubID: string;
@@ -35,9 +29,6 @@ export interface IUSER extends Document {
   updatedAt?: Date;
 }
 
-/**
- * Schema
- */
 const userSchema = new Schema<IUSER>(
   {
     githubID: {
@@ -62,9 +53,6 @@ const userSchema = new Schema<IUSER>(
       type: String,
     },
 
-    /* ================================
-       GitHub Contribution Metrics
-    ================================= */
     totalPRs: {
       type: Number,
       default: 0,
@@ -84,9 +72,6 @@ const userSchema = new Schema<IUSER>(
       type: String,
     },
 
-    /* ================================
-       OSSBuddy Leaderboard System
-    ================================= */
     totalScore: {
       type: Number,
       default: 0,
