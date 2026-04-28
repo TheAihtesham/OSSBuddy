@@ -1,4 +1,3 @@
-// ✅ Must be the first thing!
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -13,6 +12,7 @@ import match_me from './route/match_me'
 import leaderboard from './route/leaderboard'
 import bookmark from './route/bookmark'
 import ai from './route/ai'
+
 import { Router } from 'express'
 
 const app = express();
@@ -28,6 +28,7 @@ app.use('/api', leaderboard as Router);
 app.use('/api', ai as Router);
 app.use('/api', bookmark as Router);
 app.use('/api', match_me as Router);
+
 
 
 const PORT = process.env.PORT || 5000;
