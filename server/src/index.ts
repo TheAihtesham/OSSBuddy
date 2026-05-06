@@ -12,6 +12,7 @@ import match_me from './route/match_me'
 import leaderboard from './route/leaderboard'
 import bookmark from './route/bookmark'
 import ai from './route/ai'
+import contributions from './route/contributions'
 
 import { Router } from 'express'
 
@@ -28,6 +29,7 @@ app.use('/api', leaderboard as Router);
 app.use('/api', ai as Router);
 app.use('/api', bookmark as Router);
 app.use('/api', match_me as Router);
+app.use('/api', contributions as Router);
 
 
 
