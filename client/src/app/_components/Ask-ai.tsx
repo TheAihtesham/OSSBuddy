@@ -9,7 +9,6 @@ import {
   ArrowRight, Shield, Loader2,
 } from "lucide-react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface KeyComponent { name: string; role: string; path: string; }
 interface KeyFile      { path: string; importance: string; type: "entry" | "config" | "core" | "test"; }
@@ -26,10 +25,6 @@ interface Analysis {
 
 interface RepoMeta { owner: string; name: string; stars: number; language: string; description: string; }
 interface ChatMessage { role: "user" | "ai"; content: string; }
-
-const API = "http://localhost:8000/api";
-
-// ─── Constants ────────────────────────────────────────────────────────────────
 
 const DIFFICULTY_CONFIG = {
   beginner:     { color: "text-green-600 bg-green-50 border-green-200 dark:text-green-400 dark:bg-green-400/10 dark:border-green-400/20", label: "🌱 Beginner Friendly" },
@@ -49,8 +44,6 @@ const INSIGHT_CONFIG = {
   warning: { icon: <AlertTriangle className="w-3.5 h-3.5" />, color: "border-yellow-200 bg-yellow-50 dark:border-yellow-400/20 dark:bg-yellow-400/5", label: "text-yellow-600 dark:text-yellow-400"},
   info:    { icon: <Info className="w-3.5 h-3.5" />,          color: "border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800/50",            label: "text-gray-500 dark:text-gray-400"   },
 };
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
   return (
@@ -107,7 +100,6 @@ function CollapsibleSection({ title, icon, children, defaultOpen = true }: {
   );
 }
 
-// Loading state with steps
 function AnalyzingState() {
   const steps = [
     "Fetching repository metadata...",
@@ -146,8 +138,6 @@ function AnalyzingState() {
   );
 }
 
-// ─── Chat interface ───────────────────────────────────────────────────────────
-
 function ChatInterface({ repoURL, analysisContext }: { repoURL: string; analysisContext: string }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -166,7 +156,7 @@ function ChatInterface({ repoURL, analysisContext }: { repoURL: string; analysis
     setLoading(true);
 
     try {
-      const res = await fetch(`${API}/ask-ai-followup`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ask-ai-followup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repoURL, question: userMsg, previousContext: analysisContext }),
@@ -274,8 +264,6 @@ function ChatInterface({ repoURL, analysisContext }: { repoURL: string; analysis
     </div>
   );
 }
-
-// ─── Analysis result display ──────────────────────────────────────────────────
 
 function AnalysisResult({ repo, analysis, repoURL }: {
   repo: RepoMeta;
@@ -481,8 +469,6 @@ function AnalysisResult({ repo, analysis, repoURL }: {
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
-
 export default function AskAI() {
   const [repoURL, setRepoURL]   = useState("");
   const [question, setQuestion] = useState("");
@@ -497,7 +483,7 @@ export default function AskAI() {
     setResult(null);
 
     try {
-      const res = await fetch(`${API}/ask-ai-repo`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ask-ai-repo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ repoURL: repoURL.trim(), question: question.trim() }),

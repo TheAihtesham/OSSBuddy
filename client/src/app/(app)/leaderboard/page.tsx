@@ -61,9 +61,6 @@ const LANG_COLORS: Record<string, string> = {
   Swift:      "bg-red-500",
 };
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
-
-
 function getRankDisplay(rank: number) {
   if (rank === 1) return { icon: "🥇", cls: "text-amber-500 font-bold text-xl" };
   if (rank === 2) return { icon: "🥈", cls: "text-gray-400 font-bold text-xl" };
@@ -335,7 +332,7 @@ export default function LeaderboardPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_BASE}/leaderboard?page=${p}&limit=20`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboard?page=${p}&limit=20`);
       if (!res.ok) throw new Error("Failed");
       setData(await res.json());
     } catch {
@@ -348,7 +345,7 @@ export default function LeaderboardPage() {
   const fetchMe = useCallback(async () => {
     if (!token) return;
     try {
-      const res = await fetch(`${API_BASE}/leaderboard/me`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboard/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) setMe(await res.json());
@@ -359,7 +356,7 @@ export default function LeaderboardPage() {
     if (!token) return;
     setSyncing(true);
     try {
-      const res = await fetch(`${API_BASE}/leaderboard/sync`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/leaderboard/sync`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Bot, Globe, Star, Bookmark, Github,
-  Trophy, Zap, CreditCard, Search
+  Trophy, Zap, CreditCard, Search, GitPullRequest
 } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
@@ -67,6 +67,11 @@ const NAV_SECTIONS: NavSection[] = [
         label: "Match Me",
         icon: <Zap className="w-4 h-4" />,
         badge: "AI",
+      },
+      { 
+        href: "/contributions", 
+        label: "My Contributions", 
+        icon: <GitPullRequest className="w-4 h-4" /> 
       },
       {
         href: "/plans",
@@ -215,7 +220,7 @@ export default function AppShell({ children, topbar }: AppShellProps) {
               <Button
                 className="w-full gap-2"
                 onClick={() => {
-                  window.location.href = "http://localhost:8000/api/github";
+                  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/github`;
                 }}
               >
                 <Github className="w-4 h-4" />

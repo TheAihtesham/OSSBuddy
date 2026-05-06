@@ -86,7 +86,7 @@ function FloatingBadge({ icon, text, delay }: { icon: React.ReactNode; text: str
 
 export default function Home() {
   const stepsRef = useRef(null);
-  const GITHUB_LOGIN = "http://localhost:8000/api/github";
+  const GITHUB_LOGIN = `${process.env.NEXT_PUBLIC_API_URL}/github`;
 
   const { scrollYProgress } = useScroll({
     target: stepsRef,
