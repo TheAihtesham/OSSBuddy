@@ -8,8 +8,6 @@ import {
   Flame, Lock, ChevronRight, Zap,
 } from "lucide-react";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface ContributionItem {
   id: number;
   type: "pr" | "issue";

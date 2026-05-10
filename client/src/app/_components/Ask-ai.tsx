@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Github, Bot, SendHorizonal, Sparkles, AlertTriangle,
   Lightbulb, Info, FileCode, GitBranch, Users,
-  Star, Zap, ChevronDown, ChevronUp, MessageSquare,
-  ArrowRight, Shield, Loader2,
+   Zap, ChevronDown, ChevronUp, MessageSquare,
+  ArrowRight, Loader2,
 } from "lucide-react";
 
 

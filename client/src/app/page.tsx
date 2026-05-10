@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Search, Code2, Cpu, Globe, Zap, Star, ShieldCheck, Sparkles, GitPullRequest, Trophy, Bot } from "lucide-react";
+import {  Globe, Zap, Star, ShieldCheck, Sparkles, GitPullRequest, Trophy, Bot } from "lucide-react";
 import { useRef } from "react";
 
 

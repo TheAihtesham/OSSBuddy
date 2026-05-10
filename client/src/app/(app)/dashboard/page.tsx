@@ -15,7 +15,6 @@ import {
   GitPullRequest,
   ExternalLink,
   Building2,
-  Flame,
   Sparkles,
   Activity,
 } from "lucide-react";
