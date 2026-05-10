@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import {
   Bot,
@@ -16,7 +17,6 @@ import {
   X,
 } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface DecodedUser {
   id: string;
