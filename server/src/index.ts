@@ -54,7 +54,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 function keepAlive() {
   if (process.env.NODE_ENV !== "production") return;
-  const url = `${process.env.RENDER_URL ?? ""}/health`;
+  const url = `https://your-app-name.onrender.com/health`;
   setInterval(async () => {
     try {
       await fetch(url);
