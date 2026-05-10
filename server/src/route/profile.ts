@@ -12,7 +12,6 @@ const HEADERS = {
   Accept: "application/vnd.github+json",
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 async function getGitHubProfile(username: string) {
   const [{ data: githubUser }, { data: repos }] = await Promise.all([
@@ -43,8 +42,6 @@ async function getGitHubProfile(username: string) {
   };
 }
 
-// ─── GET /api/profile  (own profile, authenticated) ──────────────────────────
-
 router.get("/profile", authMiddleware, async (req: any, res: any) => {
   try {
     const user = await User.findById(req.user.id);
@@ -73,7 +70,6 @@ router.get("/profile", authMiddleware, async (req: any, res: any) => {
   }
 });
 
-// ─── GET /api/profile/:username  (public profile, no auth) ───────────────────
 
 router.get("/profile/:username", async (req: any, res: any) => {
   try {
@@ -93,7 +89,6 @@ router.get("/profile/:username", async (req: any, res: any) => {
     res.json({
       username: user.username,
       ...github,
-      // Leaderboard stats — all on User model, no separate model needed
       totalScore: user.totalScore,
       tier: user.tier,
       rank: rank + 1,

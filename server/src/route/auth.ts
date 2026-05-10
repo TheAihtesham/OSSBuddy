@@ -4,7 +4,6 @@ import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 import { User } from "../model/userModel";
 
-
 const router: Router = express.Router();
 
 const GITHUB_API_BASE = "https://api.github.com";
@@ -60,9 +59,8 @@ router.get(
       { expiresIn: "7d" }
     );
 
-    res.redirect(`http://localhost:3000/dashboard?token=${token}`);
+    res.redirect(`${process.env.CLIENT_URL}/dashboard?token=${token}`);
   }
 );
-
 
 export default router;
