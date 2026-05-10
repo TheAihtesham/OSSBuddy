@@ -68,7 +68,6 @@ function getRankDisplay(rank: number) {
   return { icon: null, cls: "text-gray-400 font-mono font-bold text-sm" };
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
 
 function ScoreBadge({ score }: { score: number }) {
   return (

@@ -7,6 +7,14 @@
   display: none;
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none; 
   scrollbar-width: none;

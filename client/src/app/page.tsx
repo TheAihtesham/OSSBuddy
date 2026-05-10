@@ -115,7 +115,7 @@ export default function Home() {
           <a href="#features" className="hover:text-black transition-colors">Features</a>
           <a href="#how-it-works" className="hover:text-black transition-colors">How it works</a>
           <a href="#leaderboard" className="hover:text-black transition-colors">Leaderboard</a>
-          <a href="#pricing" className="hover:text-black transition-colors">Pricing</a>
+          
         </div>
 
         <a
@@ -167,12 +167,12 @@ export default function Home() {
           </h1>
 
           <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            OSSBuddy uses AI to match developers with the perfect open-source projects, track contributions, and help students get hired.
+            OSSBuddy uses AI to match developers with the perfect open-source projects and track contributions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
-              href={GITHUB_LOGIN}
+              href='/dashboard'
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-black text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -187,8 +187,6 @@ export default function Home() {
               See how it works →
             </a>
           </div>
-
-          <p className="text-xs text-gray-400">Free forever · No credit card required · GitHub OAuth</p>
         </motion.div>
       </section>
 
@@ -317,71 +315,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Pricing ── */}
-      <section id="pricing" className="py-24 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-normal tracking-tight mb-3">Simple pricing</h2>
-            <p className="text-gray-500">Start free. Upgrade when you need more.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Free */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-gray-400 mb-3">Free</p>
-              <p className="text-3xl font-bold mb-1">₹0</p>
-              <p className="text-gray-400 text-xs mb-6">Forever free</p>
-              <ul className="space-y-2 text-sm text-gray-600 mb-6">
-                {["Browse trending repos", "3 AI matches/day", "Leaderboard access", "Public profile"].map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <span className="text-green-500 text-xs">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <a href={GITHUB_LOGIN} className="block text-center py-2.5 rounded-xl border border-gray-200 text-sm font-medium hover:bg-gray-50 transition-colors">
-                Get started
-              </a>
-            </div>
-
-            {/* Pro — highlighted */}
-            <div className="bg-black text-white rounded-2xl border-2 border-black p-6 relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-white/20">
-                Most Popular
-              </div>
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-gray-400 mb-3">Pro</p>
-              <p className="text-3xl font-bold mb-1">₹199<span className="text-lg font-normal text-gray-400">/mo</span></p>
-              <p className="text-gray-400 text-xs mb-6">~$2.5/month</p>
-              <ul className="space-y-2 text-sm text-gray-300 mb-6">
-                {["Unlimited AI matches", "Streak freeze (1/month)", "Priority leaderboard listing", "Resume PDF export", "Early recruiter visibility"].map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <span className="text-green-400 text-xs">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <a href={GITHUB_LOGIN} className="block text-center py-2.5 rounded-xl bg-white text-black text-sm font-bold hover:bg-gray-100 transition-colors">
-                Upgrade to Pro
-              </a>
-            </div>
-
-            {/* Recruiter */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6">
-              <p className="text-xs font-bold uppercase tracking-[0.15em] text-gray-400 mb-3">Recruiter</p>
-              <p className="text-3xl font-bold mb-1">₹2,999<span className="text-lg font-normal text-gray-400">/mo</span></p>
-              <p className="text-gray-400 text-xs mb-6">~$35/month</p>
-              <ul className="space-y-2 text-sm text-gray-600 mb-6">
-                {["Browse full leaderboard", "20 contact unlocks/mo", "Advanced filters", "1 job spotlight/mo", "Candidate saved lists"].map((f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <span className="text-green-500 text-xs">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <a href="mailto:hello@ossbuddy.dev" className="block text-center py-2.5 rounded-xl border border-gray-200 text-sm font-medium hover:bg-gray-50 transition-colors">
-                Contact us
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── CTA ── */}
       <section className="py-32 px-4 bg-white border-t border-gray-100">
@@ -407,7 +340,7 @@ export default function Home() {
             </svg>
             Start for free with GitHub
           </a>
-          <p className="text-xs text-gray-400 mt-4">No credit card · Free forever on the base plan</p>
+         
         </div>
       </section>
 
@@ -423,9 +356,7 @@ export default function Home() {
             <span>© 2026</span>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-black transition-colors">Twitter</a>
             <a href="https://github.com/TheAihtesham/OSSBuddy" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">GitHub</a>
-            <a href="mailto:hello@ossbuddy.dev" className="hover:text-black transition-colors">Contact</a>
           </div>
         </div>
       </footer>
