@@ -416,7 +416,7 @@ export default function MatchPage() {
         <button
           onClick={handleMatch}
           disabled={!canSubmit}
-          className={`h-9 px-8 rounded-lg text-[11px] font-bold transition-all ${
+          className={`h-9 px-8 cursor-pointer rounded-lg text-[11px] font-bold transition-all ${
             canSubmit
               ? "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-100"
               : "bg-gray-100 dark:bg-[#21262d] text-gray-400 cursor-not-allowed border border-gray-200 dark:border-[#30363d]"

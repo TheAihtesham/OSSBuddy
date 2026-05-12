@@ -220,7 +220,7 @@ export default function AppShell({
         <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
           <Bot className="w-5 h-5 text-white dark:text-black" />
         </div>
-        <h2 className="text-xl font-bold tracking-tighter">
+        <h2 className="text-xl font-bold tracking-tighter cursor-pointer" onClick={()=>router.push('/')}>
           OSS Buddy
         </h2>
       </div>
@@ -309,7 +309,7 @@ export default function AppShell({
     </aside>
 
     {/* Content */}
-    <section className="flex-1 overflow-y-auto pt-14 lg:pt-0">
+    <section className="flex-1 overflow-y-auto pt-14 lg:pt-0 relative">
       <div className="p-4 md:p-6 lg:p-10">
         {children}
       </div>

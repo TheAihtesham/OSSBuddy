@@ -7,8 +7,8 @@ import Calendar from "react-github-calendar";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import {
   Users, UserPlus, BookOpen, Star, Trophy, ExternalLink,
-  Share2, ArrowLeft, GitPullRequest, AlertCircle, Flame,
-  Copy, Check, Zap, TrendingUp, GitBranch, Code2,
+  ArrowLeft, GitPullRequest, AlertCircle, Flame,
+  Copy, Check, Zap, TrendingUp, GitBranch,
 } from "lucide-react";
 
 
@@ -42,11 +42,11 @@ interface Profile {
 
 
 const TIER_CONFIG: Record<string, { border: string; text: string; bg: string; icon: string; accent: string }> = {
-  "OSS Legend":         { border: "border-amber-400/30",   text: "text-amber-500",   bg: "bg-amber-400/10",   icon: "⚡", accent: "#f59e0b" },
-  "Core Contributor":   { border: "border-violet-400/30",  text: "text-violet-500",  bg: "bg-violet-400/10",  icon: "🔮", accent: "#8b5cf6" },
-  "Active Contributor": { border: "border-sky-400/30",     text: "text-sky-500",     bg: "bg-sky-400/10",     icon: "🌊", accent: "#0ea5e9" },
-  "Rising Star":        { border: "border-emerald-400/30", text: "text-emerald-500", bg: "bg-emerald-400/10", icon: "🌱", accent: "#10b981" },
-  "New Contributor":    { border: "border-gray-300 dark:border-gray-600",      text: "text-gray-500",    bg: "bg-gray-100 dark:bg-gray-800",      icon: "🔹", accent: "#6b7280" },
+  "OSS Legend": { border: "border-amber-400/30", text: "text-amber-500", bg: "bg-amber-400/10", icon: "⚡", accent: "#f59e0b" },
+  "Core Contributor": { border: "border-violet-400/30", text: "text-violet-500", bg: "bg-violet-400/10", icon: "🔮", accent: "#8b5cf6" },
+  "Active Contributor": { border: "border-sky-400/30", text: "text-sky-500", bg: "bg-sky-400/10", icon: "🌊", accent: "#0ea5e9" },
+  "Rising Star": { border: "border-emerald-400/30", text: "text-emerald-500", bg: "bg-emerald-400/10", icon: "🌱", accent: "#10b981" },
+  "New Contributor": { border: "border-gray-300 dark:border-gray-600", text: "text-gray-500", bg: "bg-gray-100 dark:bg-gray-800", icon: "🔹", accent: "#6b7280" },
 };
 
 const LANG_DOT: Record<string, string> = {
@@ -87,7 +87,7 @@ function ProfileSkeleton() {
         <Skeleton className="h-56 rounded-2xl" />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {[1,2,3,4].map(i => <Skeleton key={i} className="h-24 rounded-2xl" />)}
+        {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24 rounded-2xl" />)}
       </div>
     </div>
   );
@@ -140,11 +140,10 @@ function StreakDots({ activeDays }: { activeDays: number }) {
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.3 + i * 0.02, type: "spring", stiffness: 300 }}
-          className={`w-2.5 h-2.5 rounded-sm ${
-            i < filled
+          className={`w-2.5 h-2.5 rounded-sm ${i < filled
               ? "bg-black dark:bg-white"
               : "bg-gray-100 dark:bg-[#21262d]"
-          }`}
+            }`}
         />
       ))}
     </div>
@@ -161,19 +160,19 @@ function SectionLabel({ icon, text }: { icon: React.ReactNode; text: string }) {
 }
 
 export default function ProfileStats() {
-  const router   = useRouter();
+  const router = useRouter();
   const { username } = useParams();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error,   setError]   = useState(false);
-  const [copied,  setCopied]  = useState(false);
+  const [error, setError] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<"overview" | "contributions">("overview");
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/${username}`)
       .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
-      .then((d)  => { setProfile(d); setLoading(false); })
-      .catch(()  => { setError(true); setLoading(false); });
+      .then((d) => { setProfile(d); setLoading(false); })
+      .catch(() => { setError(true); setLoading(false); });
   }, [username]);
 
   if (loading) return <ProfileSkeleton />;
@@ -192,20 +191,20 @@ export default function ProfileStats() {
     );
   }
 
-  const tc  = TIER_CONFIG[profile.tier] ?? TIER_CONFIG["New Contributor"];
-  const bd  = profile.breakdown;
+  const tc = TIER_CONFIG[profile.tier] ?? TIER_CONFIG["New Contributor"];
+  const bd = profile.breakdown;
   const langDot = LANG_DOT[profile.topLang ?? ""] ?? "bg-gray-400";
 
   const scoreMetrics = bd ? [
-    { label: "PR Score",    value: bd.prScore,         max: 400, color: "bg-blue-500"   },
-    { label: "Issues",      value: bd.issueScore,       max: 200, color: "bg-green-500"  },
+    { label: "PR Score", value: bd.prScore, max: 400, color: "bg-blue-500" },
+    { label: "Issues", value: bd.issueScore, max: 200, color: "bg-green-500" },
     { label: "Consistency", value: bd.consistencyScore, max: 300, color: "bg-purple-500" },
-    { label: "AI Bonus",    value: bd.aiScore,          max: 100, color: "bg-amber-500"  },
+    { label: "AI Bonus", value: bd.aiScore, max: 100, color: "bg-amber-500" },
   ] : [];
 
   const streakEmoji = profile.activeDays >= 30 ? "🔥"
     : profile.activeDays >= 7 ? "⚡"
-    : profile.activeDays >= 1 ? "🌱" : "💤";
+      : profile.activeDays >= 1 ? "🌱" : "💤";
 
   return (
     <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-black dark:text-gray-200 font-sans">
@@ -366,10 +365,10 @@ export default function ProfileStats() {
           transition={{ delay: 0.1 }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-3"
         >
-          <StatCard icon={<Users size={16} />}    value={profile.followers}    label="Followers"    />
-          <StatCard icon={<UserPlus size={16} />}  value={profile.following}    label="Following"    />
-          <StatCard icon={<BookOpen size={16} />}  value={profile.public_repos} label="Public Repos" />
-          <StatCard icon={<Star size={16} />}      value={profile.total_stars}  label="Total Stars"  />
+          <StatCard icon={<Users size={16} />} value={profile.followers} label="Followers" />
+          <StatCard icon={<UserPlus size={16} />} value={profile.following} label="Following" />
+          <StatCard icon={<BookOpen size={16} />} value={profile.public_repos} label="Public Repos" />
+          <StatCard icon={<Star size={16} />} value={profile.total_stars} label="Total Stars" />
         </motion.div>
 
         {/* ── Tabs ── */}
@@ -378,11 +377,10 @@ export default function ProfileStats() {
             <button
               key={t}
               onClick={() => setActiveTab(t)}
-              className={`px-4 py-2 rounded-lg text-xs font-bold capitalize transition-all ${
-                activeTab === t
+              className={`px-4 py-2 rounded-lg text-xs font-bold capitalize transition-all ${activeTab === t
                   ? "bg-white dark:bg-[#0d1117] shadow-sm text-black dark:text-white"
                   : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              }`}
+                }`}
             >
               {t}
             </button>
@@ -398,7 +396,7 @@ export default function ProfileStats() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="space-y-4"
+              className="space-y-4 cursor-pointer"
             >
               {/* Streak + OSS Activity */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -408,9 +406,8 @@ export default function ProfileStats() {
                   <SectionLabel icon={<Flame size={13} className="text-orange-500" />} text="Activity Streak" />
 
                   <div className="flex items-end gap-3 mb-5">
-                    <span className={`text-5xl font-bold font-mono tabular-nums leading-none ${
-                      profile.activeDays > 0 ? "text-black dark:text-white" : "text-gray-300 dark:text-gray-700"
-                    }`}>
+                    <span className={`text-5xl font-bold font-mono tabular-nums leading-none ${profile.activeDays > 0 ? "text-black dark:text-white" : "text-gray-300 dark:text-gray-700"
+                      }`}>
                       {profile.activeDays ?? 0}
                     </span>
                     <span className="text-2xl mb-1">{streakEmoji}</span>
@@ -507,9 +504,9 @@ export default function ProfileStats() {
               {/* Stats summary */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { icon: <GitPullRequest size={16} className="text-blue-500" />,  label: "PRs Merged",    value: profile.totalPRs    },
-                  { icon: <AlertCircle   size={16} className="text-green-500" />,   label: "Issues Closed", value: profile.totalIssues  },
-                  { icon: <Flame         size={16} className="text-orange-500" />,  label: "Active Days",   value: profile.activeDays   },
+                  { icon: <GitPullRequest size={16} className="text-blue-500" />, label: "PRs Merged", value: profile.totalPRs },
+                  { icon: <AlertCircle size={16} className="text-green-500" />, label: "Issues Closed", value: profile.totalIssues },
+                  { icon: <Flame size={16} className="text-orange-500" />, label: "Active Days", value: profile.activeDays },
                 ].map((s) => (
                   <div key={s.label} className="bg-white dark:bg-[#161b22] border border-gray-100 dark:border-[#30363d] rounded-2xl p-5 flex items-center gap-4">
                     <div className="w-9 h-9 rounded-xl bg-gray-50 dark:bg-[#21262d] flex items-center justify-center shrink-0">
