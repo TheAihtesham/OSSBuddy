@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useSpring } from "framer-motion";
-import {  Globe, Zap, Star, ShieldCheck, Sparkles, GitPullRequest, Trophy, Bot } from "lucide-react";
+import { Globe, Zap, Star, ShieldCheck, Sparkles, GitPullRequest, Trophy, Bot } from "lucide-react";
 import { useRef } from "react";
 import Link from "next/link";
 
@@ -30,8 +30,8 @@ const STEPS = [
   },
   {
     num: "04",
-    title: "Get noticed by recruiters",
-    description: "Top contributors get discovered by companies actively hiring OSS developers. Turn contributions into a career.",
+    title: "Build your OSS reputation",
+    description: "Track your contributions, maintain streaks, and grow your presence in the open-source community.",
   },
 ];
 
@@ -56,9 +56,9 @@ const FEATURES = [
   },
   {
     icon: <Globe className="w-5 h-5" />,
-    title: "Recruiter Portal",
-    description: "Companies browse the leaderboard and reach out to top contributors directly for job opportunities.",
-    tag: "Get Hired",
+    title: "Developer Community",
+    description: "Build your open-source presence and showcase your contributions.",
+    tag: "Global Network",
   },
 ];
 
@@ -82,8 +82,6 @@ function FloatingBadge({ icon, text, delay }: { icon: React.ReactNode; text: str
   );
 }
 
-
-
 export default function Home() {
   const stepsRef = useRef(null);
   const GITHUB_LOGIN = `${process.env.NEXT_PUBLIC_API_URL}/github`;
@@ -93,7 +91,7 @@ export default function Home() {
     offset: ["start 0.8", "end 0.3"],
   });
 
-    const scaleY = useSpring(scrollYProgress, {
+  const scaleY = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
@@ -115,10 +113,10 @@ export default function Home() {
           <a href="#features" className="hover:text-black transition-colors">Features</a>
           <a href="#how-it-works" className="hover:text-black transition-colors">How it works</a>
           <a href="#leaderboard" className="hover:text-black transition-colors">Leaderboard</a>
-          
+
         </div>
 
-        <Link 
+        <Link
           href={GITHUB_LOGIN}
           className="flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-colors"
         >
@@ -158,7 +156,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
-          
+
 
           <h1 className="text-5xl md:text-7xl font-normal tracking-tight leading-tight">
             A unified platform for <br />
@@ -233,10 +231,10 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-normal tracking-tight mb-3">
-              Compete. Contribute. Get noticed.
+              Compete. Contribute. Grow.
             </h2>
             <p className="text-gray-500 text-base">
-              Top contributors get discovered by companies hiring OSS developers.
+              Track your progress and climb the leaderboard with every contribution.
             </p>
           </div>
 
@@ -257,27 +255,36 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
-                className="flex items-center gap-4 px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors"
+                className="flex items-center gap-3 px-4 sm:px-6 py-4 border-b border-gray-50 hover:bg-gray-50 transition-colors"
               >
-                <span className="text-sm font-mono text-gray-400 w-6">
+                <span className="text-sm font-mono text-gray-400 w-6 shrink-0">
                   {user.rank === 1 ? "🥇" : user.rank === 2 ? "🥈" : user.rank === 3 ? "🥉" : `#${user.rank}`}
                 </span>
-                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
+
+                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500 shrink-0">
                   {user.username[0].toUpperCase()}
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold">@{user.username}</p>
+
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold truncate">@{user.username}</p>
                   <p className="text-[10px] text-gray-400">{user.lang}</p>
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
-                  {user.tier}
-                </span>
-                <span className="font-mono text-sm font-bold">{user.score} <span className="text-gray-400 font-normal text-xs">pts</span></span>
+
+                <div className="flex flex-col items-end shrink-0">
+                  <span className="hidden sm:inline text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 mb-1">
+                    {user.tier}
+                  </span>
+
+                  <span className="font-mono text-sm font-bold whitespace-nowrap">
+                    {user.score}
+                    <span className="text-gray-400 font-normal text-xs ml-1">pts</span>
+                  </span>
+                </div>
               </motion.div>
             ))}
 
             <div className="px-6 py-4 text-center">
-              <Link 
+              <Link
                 href={GITHUB_LOGIN}
                 className="text-xs font-medium text-gray-400 hover:text-black transition-colors"
               >
@@ -329,7 +336,7 @@ export default function Home() {
             <span className="italic font-light text-gray-500">first contribution?</span>
           </motion.h2>
           <p className="text-gray-500 text-base mb-8 max-w-md mx-auto">
-            Join developers already using OSSBuddy to find projects, build streaks, and get hired.
+            Join developers already using OSSBuddy to discover projects, build streaks, and grow in open source.
           </p>
           <a
             href={'/dashboard'}
@@ -340,7 +347,7 @@ export default function Home() {
             </svg>
             Start for free with GitHub
           </a>
-         
+
         </div>
       </section>
 
