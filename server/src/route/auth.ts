@@ -2,16 +2,12 @@ import express, { Router } from "express";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
+
 import { User } from "../model/userModel";
+import { computeScore } from "../utils/scoring";
+import { fetchGitHubStats } from "../utils/fetchgithuStats";
 
 const router: Router = express.Router();
-
-const GITHUB_API_BASE = "https://api.github.com";
-const HEADERS = {
-  Authorization: `Bearer ${process.env.GITHUB_API_TOKEN!}`,
-  Accept: "application/vnd.github+json",
-};
-
 
 passport.use(
   new GitHubStrategy(
@@ -20,17 +16,55 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
       callbackURL: process.env.CALL_BACK_URL!,
     },
-    async (_accessToken: any, _refreshToken: any, profile: any, done: any) => {
+
+    async (
+      _accessToken: string,
+      _refreshToken: string,
+      profile: any,
+      done: any
+    ) => {
       try {
-        let user = await User.findOne({ githubID: profile.id });
+        let user = await User.findOne({
+          githubID: profile.id,
+        });
 
         if (!user) {
           user = await User.create({
             githubID: profile.id,
-            username: profile.username,
+            username: profile.username.toLowerCase(),
             email: profile.emails?.[0]?.value || "",
             photoURL: profile.photos?.[0]?.value || "",
+
+            // defaults
+            totalScore: 0,
+            tier: "New Contributor",
+            totalPRs: 0,
+            totalIssues: 0,
+            activeDays: 0,
+            topLang: "",
           });
+        }
+
+        try {
+          const stats = await fetchGitHubStats(user.username);
+
+          const { totalScore, tier, breakdown } =
+            computeScore(stats);
+
+          user.totalPRs = stats.totalPRs;
+          user.totalIssues = stats.totalIssues;
+          user.activeDays = stats.activeDays;
+          user.topLang = stats.topLang;
+
+          user.totalScore = totalScore;
+          user.tier = tier;
+          user.breakdown = breakdown;
+
+          await user.save();
+
+          console.log(`Leaderboard synced for ${user.username}`);
+        } catch (syncErr) {
+          console.error("GitHub auto-sync failed:", syncErr);
         }
 
         done(null, user);
@@ -41,25 +75,47 @@ passport.use(
   )
 );
 
-router.get("/github", passport.authenticate("github", { scope: ["user:email"] }));
+router.get(
+  "/github",
+  passport.authenticate("github", {
+    scope: ["user:email"],
+  })
+);
 
 router.get(
   "/github/callback",
-  passport.authenticate("github", { session: false }),
-  (req: any, res) => {
-    const user = req.user;
+  passport.authenticate("github", {
+    session: false,
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
+  }),
 
-    const token = jwt.sign(
-      {
-        id: user._id,
-        username: user.username,
-        photoURL: user.photoURL,
-      },
-      process.env.JWT_SECRET!,
-      { expiresIn: "7d" }
-    );
+  async (req: any, res) => {
+    try {
+      const user = req.user;
 
-    res.redirect(`${process.env.CLIENT_URL}/dashboard?token=${token}`);
+      const token = jwt.sign(
+        {
+          id: user._id,
+          username: user.username,
+          photoURL: user.photoURL,
+        },
+
+        process.env.JWT_SECRET!,
+        {
+          expiresIn: "7d",
+        }
+      );
+
+      res.redirect(
+        `${process.env.CLIENT_URL}/dashboard?token=${token}`
+      );
+    } catch (err) {
+      console.error("GitHub callback error:", err);
+
+      res.redirect(
+        `${process.env.CLIENT_URL}/login?error=auth_failed`
+      );
+    }
   }
 );
 
