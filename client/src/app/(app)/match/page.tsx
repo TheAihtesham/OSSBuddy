@@ -187,7 +187,7 @@ function RepoCard({ repo, index }: { repo: MatchedRepo; index: number }) {
           <div>
             <button
               onClick={() => setExpanded((e) => !e)}
-              className="flex items-center gap-1.5 text-[11px] font-medium text-gray-400 hover:text-black dark:hover:text-white transition-colors mb-2"
+              className="flex cursor-pointer items-center gap-1.5 text-[11px] font-medium text-gray-400 hover:text-black dark:hover:text-white transition-colors mb-2"
             >
               <span className={`text-[8px] transition-transform duration-200 ${expanded ? "rotate-90" : ""}`}>
                 ▶

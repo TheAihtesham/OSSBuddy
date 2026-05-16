@@ -100,7 +100,7 @@ function ActivityChart({ monthly }: { monthly: MonthlyData[] }) {
             {/* Bar */}
             <motion.div
               initial={{ height: 0 }}
-              animate={{ height: `${Math.max(pct, 4)}%` }}
+              animate={{ height: `${Math.max(pct, 12)}%` }}
               transition={{ delay: i * 0.04, duration: 0.5, ease: "easeOut" }}
               className="w-full rounded-t-sm"
               style={{
@@ -531,13 +531,13 @@ export default function ContributionsPage() {
           {hasContributions && (
             <button
               onClick={() => {
-                navigator.clipboard.writeText(`${window.location.origin}/profile/${username}`);
+                navigator.clipboard.writeText(`${process.env.NEXT_PUBLIC_API_URL}/profile/${username}`);
               }}
               className="w-full p-4 rounded-2xl border border-gray-100 dark:border-[#30363d] bg-white dark:bg-[#161b22] text-xs font-bold text-gray-500 hover:text-black dark:hover:text-white hover:border-gray-300 dark:hover:border-gray-500 transition-all text-left"
             >
               Share your contribution profile
               <p className="font-normal text-gray-400 mt-0.5 text-[10px]">
-                ossbuddy.dev/profile/{username}
+                oss-buddy.vercel.app/profile/{username}
               </p>
             </button>
           )}
